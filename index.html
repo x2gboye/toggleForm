@@ -33,6 +33,9 @@
 	section {
         position: relative;
     }
+	section .form {
+		display:none;
+	}
     section .dl-horizontal dt {
         width:80px;
     }
@@ -81,7 +84,7 @@
         </div>
     </nav>  
     
-    <section class="toggleForm panel panel-default">
+    <section class="panel panel-default">
     	<div class="panel-heading">Customer Information</div>
         <div class="data panel-body">
             <dl class="dl-horizontal"> 
@@ -134,7 +137,7 @@
         </div>
     </section>
 
-    <section class="toggleForm panel panel-default">
+    <section class="panel panel-default">
     	<div class="panel-heading">Shipping Information</div>
         <div class="data panel-body">
             <dl class="dl-horizontal"> 
@@ -177,7 +180,7 @@
         </div>
     </section>
 
-    <section class="toggleForm panel panel-default">
+    <section class="panel panel-default">
         <div class="panel-heading">Registered Vehicles</div>
         <div class="data panel-body">
         	<button class="btn btn-default btn-xs edit" type="button" data-toggle="#carForm"><i class="glyphicon glyphicon-plus"></i> Add</button>

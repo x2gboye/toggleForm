@@ -96,36 +96,42 @@
         },
 
         showForm: function () {
-
-            var self = $(this);
-            var settings = self.data('toggleForm-settings');
-            if (settings) {
-                self.find(settings.data).hide();
-                self.find('button.' + settings.close + ', ' + settings.form).show();
-            }
+			
+			return this.each(function () {
+				var self = $(this),
+					settings = self.data('toggleForm-settings');
+				if (settings) {
+					self.find(settings.data + ', ' + settings.edit).hide();
+					self.find('button.' + settings.close + ', ' + settings.form).show();
+				}
+			});
 
         },
 
         showData: function () {
-
-            var self = $(this);
-            var settings = self.data('toggleForm-settings');
-            if (settings) {
-                self.find('button.' + settings.close + ', ' + settings.form).hide();
-                self.find(settings.data).show();
-            }
+			
+			return this.each(function () {
+				var self = $(this),
+					settings = self.data('toggleForm-settings');
+				if (settings) {
+					self.find('button.' + settings.close + ', ' + settings.form).hide();
+					self.find(settings.data + ', ' + settings.edit).show();
+				}
+			});
 
         },
 
         destroy: function () {
-
-            var self = $(this);
-            var settings = self.data('toggleForm-settings');
-            if (settings) {
-                self.find(settings.data + ', ' + settings.form).show();
-                self.find(settings.edit + ', ' + settings.cancel).off('click');
-                self.find('button.' + settings.close).remove();
-            }
+			
+			return this.each(function () {
+				var self = $(this),
+					settings = self.data('toggleForm-settings');
+				if (settings) {
+					self.find(settings.data + ', ' + settings.form + ', ' + settings.edit).show();
+					self.find(settings.edit + ', ' + settings.cancel).off('click');
+					self.find('button.' + settings.close).remove();
+				}
+			});
 
         }
 
