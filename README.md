@@ -2,7 +2,7 @@ toggleForm
 ==========
 ![Alt text](screenshot.png)
 
-Very simply plugin that shows/hides forms associated with editing bits of data.
+Very simple plugin that shows/hides forms associated with editing bits of data.
 Useful for a screen where you might have multiple forms, like an account settings screen.
 
 [View Example](http://x2gboye.github.io/toggleForm/index.html).
