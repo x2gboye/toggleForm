@@ -23,7 +23,7 @@
                 _FORM = this.find(settings.form),
                 _CLOSE = $('<button>', {
                     type: 'button',
-                        'class': settings.close,
+                    'class': settings.close,
                     html: '&times;'
                 }).appendTo(this);
 
