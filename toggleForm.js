@@ -1,6 +1,7 @@
 ;(function ($) {
 
     var defaults = {
+		className: 'ui-toggleForm',
         edit: 'button.edit',
         cancel: 'button.cancel',
         data: '.data',
@@ -13,67 +14,70 @@
 
         init: function (options) {
 
-            var settings = $.extend({}, defaults);
-            if (options) {
-                settings = $.extend(settings, options);
-            }
-
-            var _EDIT = this.find(settings.edit),
-                _DATA = this.find(settings.data),
-                _FORM = this.find(settings.form),
-                _CLOSE = $('<button>', {
-                    type: 'button',
-                    'class': settings.close,
-                    html: '&times;'
-                }).appendTo(this);
-
-            return this.each(function () {
-
-                var self = $(this),
-                    edit = self.find(settings.edit),
+            return this.each(function (index) {
+				
+				var settings = $.extend({}, defaults);
+				if (options) {
+					settings = $.extend(settings, options);
+				}
+				
+				var self = $(this);
+								
+				//so we can use settings in other methods
+                self.data('toggleForm-settings', settings);
+				
+                var edit = self.find(settings.edit),
                     cancel = self.find(settings.cancel),
                     data = self.find(settings.data),
-                    form = self.find(settings.form),
-                    close = self.find('button.' + settings.close);
-
-                if (close.length > 1) {
-                    self.find('button.' + settings.close + ':gt(0)').remove();
-                }
-
-                //so we can use settings in other methods
-                self.data('toggleForm-settings', settings);
-
-                showData();
-
-                edit.on('click', function () {
-                    var toggle = $(this).data('toggle');
-                    if (settings.hideOtherForms) {
-                        reset();
-                    }
-                    showForm(toggle);
-                });
-
-                close.on('click', function () {
-                    showData();
-                });
-
-                cancel.on('click', function () {
-                    showData();
-                    scrollToForm();
-                });
+                    form = self.find(settings.form);
+                
+				if(!self.data('toggleForm-toggled')) {
+					
+					self.addClass(settings.className);
+					
+					var close = $('<button>', {
+									type: 'button',
+									'class': settings.close,
+									html: '&times;'
+								}).appendTo(self);
+					
+					edit.on('click', function () {
+						var toggle = $(this).data('toggle');
+						if (settings.hideOtherForms) {
+							methods.showData.apply($('.' + settings.className));
+						}
+						showForm(toggle);
+						//console.log('edit clicked');
+					});
+	
+					close.on('click', function () {
+						showData();
+						//console.log('close clicked');
+					});
+	
+					cancel.on('click', function () {
+						showData();
+						scrollToForm();
+						//console.log('cancel clicked');
+					});
+					
+					self.data('toggleForm-toggled', true);
+					//console.log('toggleForm has been initialized on <' + self.prop('tagName') + ' id="' + self.attr('id') + '"> has been initialized');
+				}
+				else {
+					var close = self.find('button.' + settings.close);
+				}
+				
+				showData();
 
                 function showData() {
-                    close.hide();
-                    form.hide();
-                    data.fadeIn('fast');
-                    edit.fadeIn('fast');
+                    close.add(form).hide();
+                    data.add(edit).fadeIn('fast');
                 }
 
                 function showForm(toggle) {
-                    data.hide();
-                    edit.hide();
-                    close.fadeIn('fast');
-                    $(toggle).fadeIn('fast');
+                    data.add(edit).hide();
+                    close.add($(toggle)).fadeIn('fast');
                     scrollToForm();
                 }
 
@@ -86,13 +90,7 @@
                 }
 
             });
-
-            function reset() {
-                _CLOSE.hide();
-                _FORM.hide();
-                _DATA.show();
-                _EDIT.show();
-            }
+			
         },
 
         showForm: function () {
@@ -130,6 +128,8 @@
 					self.find(settings.data + ', ' + settings.form + ', ' + settings.edit).show();
 					self.find(settings.edit + ', ' + settings.cancel).off('click');
 					self.find('button.' + settings.close).remove();
+					self.data('toggleForm-toggled', false);
+					self.removeClass(settings.className);
 				}
 			});
 
