@@ -41,7 +41,8 @@
 									html: '&times;'
 								}).appendTo(self);
 					
-					edit.on('click', function () {
+					edit.on('click', function (e) {
+						e.preventDefault();
 						var toggle = $(this).data('toggle');
 						if (settings.hideOtherForms) {
 							methods.showData.apply($('.' + settings.className));
@@ -55,7 +56,8 @@
 						//console.log('close clicked');
 					});
 	
-					cancel.on('click', function () {
+					cancel.on('click', function (e) {
+						e.preventDefault();
 						showData();
 						scrollToForm();
 						//console.log('cancel clicked');
